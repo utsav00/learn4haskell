@@ -517,8 +517,8 @@ True
 >>> isThird42 [42, 42, 0, 42]
 False
 -}
-isThird42 :: [Int ] -> Bool
-isThird42 (_: _: x : _) = x == 42
+isThird42 :: [Int] -> Bool
+isThird42 (_: _: 42 : _) = True
 isThird42 _ = False
 
 
@@ -870,7 +870,8 @@ list.
 rotate :: Int -> [a] -> [a]
 rotate n l
   | n < 0 || null l = []
-  | otherwise = drop (n `mod` length l) l ++ take (n `mod` length l) l
+  | otherwise = drop len l ++ take len l
+  where len = n `mod` length l
 
 -- another way using `cycle`
 
@@ -893,8 +894,10 @@ and reverses it.
   cheating!
 -}
 rewind :: [a] -> [a]
-rewind [] = []
-rewind (x : xs) = rewind xs ++ [x]
+rewind = go []
+  where
+    go acc [] = acc
+    go acc (x: xs) = go (x: acc) xs
 
 
 {-

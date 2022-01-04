@@ -558,10 +558,9 @@ Casual reminder about adding top-level type signatures for all functions :)
 
 mid :: Int -> Int -> Int -> Int
 mid x y z
-  | (x < y && x > z) || (x > y && x < z) = x
-  | (y < z && y > x) || (y > z && y < x) = y
-  | (z < x && z > y) || (z > x && z < y) = z
-  | otherwise = if x == y then x else z
+  | (x <= y && x >= z) || (x >= y && x <= z) = x
+  | (y <= z && y >= x) || (y >= z && y <= x) = y
+  | otherwise = z
 
 {- |
 =⚔️= Task 8
@@ -672,9 +671,10 @@ aren't ready for this boss yet!
 -}
 
 firstDigit :: Integral t => t -> t
-firstDigit n
-  | abs n `div` 10 == 0 = abs n
-  | otherwise = firstDigit (abs n `div` 10)
+firstDigit n 
+  | x `div` 10 == 0 = x
+  | otherwise = firstDigit (x `div` 10)
+  where x = abs n
 
 {-
 You did it! Now it is time to open a pull request with your changes
